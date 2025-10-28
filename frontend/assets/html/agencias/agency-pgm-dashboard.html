@@ -1,0 +1,804 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1",
+        "light-purple": "#A29BFE",
+        "light-purple-hover": "#867AF0"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Dashboard PGM</h2>
+                        <p class="text-gray-600">Visão geral de todos os parceiros e performance</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="pgm-dashboard-content" class="flex-1 p-5 overflow-auto">
+                <div id="view-tabs" class="mb-6">
+    <div class="flex items-center justify-between mb-4">
+        <div class="border-b border-gray-200 flex-1">
+            <nav class="-mb-px flex space-x-8">
+                <button id="geral-tab" class="border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium">
+                    Geral
+                </button>
+                <button id="parceiro-tab" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium">
+                    Parceiro
+                </button>
+                <button id="squad-tab" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium">
+                    <i class="fa-solid fa-people-group mr-2"></i>Squad
+                </button>
+                <button id="analise-ia-tab" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium">
+                    <i class="fa-solid fa-brain mr-2"></i>Análise com IA
+                </button>
+            </nav>
+        </div>
+        
+        <div id="global-filters" class="flex items-center space-x-3 ml-6">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-filter text-gray-400"></i>
+                <span class="text-sm text-gray-600 font-medium">Filtros:</span>
+            </div>
+            
+            <select id="squad-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                <option value="">Squad</option>
+                <option value="alpha">Alpha Squad</option>
+                <option value="beta">Beta Squad</option>
+                <option value="gamma">Gamma Squad</option>
+                <option value="delta">Delta Squad</option>
+                <option value="omega">Omega Squad</option>
+            </select>
+            
+            <select id="month-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                <option value="">Mês</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+            </select>
+            
+            <select id="year-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                <option value="">Ano</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+            </select>
+            
+            <select id="quarter-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                <option value="">Trimestre</option>
+                <option value="1">1º Trimestre</option>
+                <option value="2">2º Trimestre</option>
+                <option value="3">3º Trimestre</option>
+                <option value="4">4º Trimestre</option>
+            </select>
+            
+            <button id="apply-filters" class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                <i class="fa-solid fa-check mr-2"></i>Aplicar
+            </button>
+            
+            <button id="reset-filters" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors">
+                <i class="fa-solid fa-refresh mr-2"></i>Limpar
+            </button>
+        </div>
+    </div>
+</div>
+
+                <div id="metrics-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
+                    <div id="partners-active-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Parceiros Ativos</p>
+                                <p class="text-lg font-bold text-gray-900">28</p>
+                            </div>
+                            <div class="bg-blue-100 p-2 rounded-full">
+                                <i class="fa-solid fa-handshake text-blue-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="total-sellers-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Total Vendedores</p>
+                                <p class="text-lg font-bold text-gray-900">156</p>
+                            </div>
+                            <div class="bg-green-100 p-2 rounded-full">
+                                <i class="fa-solid fa-users text-green-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="total-sales-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Total de Vendas</p>
+                                <p class="text-lg font-bold text-gray-900">1,247</p>
+                            </div>
+                            <div class="bg-purple-100 p-2 rounded-full">
+                                <i class="fa-solid fa-shopping-cart text-purple-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="total-revenue-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Faturamento Total</p>
+                                <p class="text-lg font-bold text-gray-900">R$ 2.8M</p>
+                            </div>
+                            <div class="bg-yellow-100 p-2 rounded-full">
+                                <i class="fa-solid fa-dollar-sign text-yellow-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="conversion-rate-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Taxa de Conversão</p>
+                                <p class="text-lg font-bold text-gray-900">4.2%</p>
+                            </div>
+                            <div class="bg-indigo-100 p-2 rounded-full">
+                                <i class="fa-solid fa-percentage text-indigo-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="average-ticket-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Ticket Médio</p>
+                                <p class="text-lg font-bold text-gray-900">R$ 2,247</p>
+                            </div>
+                            <div class="bg-pink-100 p-2 rounded-full">
+                                <i class="fa-solid fa-ticket text-pink-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ads-investment-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-medium text-gray-600">Investimento em Ads</p>
+                                <p class="text-lg font-bold text-gray-900">R$ 485K</p>
+                            </div>
+                            <div class="bg-orange-100 p-2 rounded-full">
+                                <i class="fa-solid fa-bullhorn text-orange-600 text-sm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div id="sales-evolution-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-gray-800">Evolução de Vendas</h3>
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                <option>Últimos 12 meses</option>
+                                <option>Últimos 6 meses</option>
+                                <option>Últimos 3 meses</option>
+                            </select>
+                        </div>
+                        <div id="sales-evolution-chart" class="h-80"></div>
+                    </div>
+
+                    <div id="sales-funnel-card" class="bg-white p-6 rounded-lg border border-gray-200">
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h3 class="text-xl font-bold text-gray-800">Funil de Vendas</h3>
+            <p class="text-sm text-gray-500">Taxa de conversão por etapa</p>
+        </div>
+        <button class="flex items-center text-gray-600 hover:text-gray-800">
+            <i class="fa-solid fa-eye mr-2"></i>
+            <span class="text-sm">Detalhes</span>
+        </button>
+    </div>
+    
+    <div class="space-y-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa-solid fa-users text-gray-400 mr-3"></i>
+                <span class="text-sm font-medium text-gray-700">Clientes Atendidos</span>
+            </div>
+            <span class="text-lg font-bold text-gray-900">100</span>
+        </div>
+        <div class="w-full bg-accent rounded-full h-4"></div>
+        
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa-solid fa-calendar text-gray-400 mr-3"></i>
+                <span class="text-sm font-medium text-gray-700">Agendamento</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-gray-900">25</span>
+                <span class="text-sm font-medium text-orange-500">25%</span>
+            </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-4">
+            <div class="bg-gray-300 h-4 rounded-full" style="width: 25%"></div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa-solid fa-calendar-check text-gray-400 mr-3"></i>
+                <span class="text-sm font-medium text-gray-700">Comparecimento</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-gray-900">12</span>
+                <span class="text-sm font-medium text-orange-500">48%</span>
+            </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-4">
+            <div class="bg-gray-300 h-4 rounded-full" style="width: 12%"></div>
+        </div>
+        
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fa-solid fa-chart-line text-gray-400 mr-3"></i>
+                <span class="text-sm font-medium text-gray-700">Número de Vendas</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-lg font-bold text-gray-900">6</span>
+                <span class="text-sm font-medium text-orange-500">50%</span>
+            </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-4">
+            <div class="bg-gray-300 h-4 rounded-full" style="width: 6%"></div>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-gray-200">
+        <div>
+            <p class="text-sm text-gray-500 mb-1">Taxa de Conversão</p>
+            <p class="text-2xl font-bold text-green-600">6.0%</p>
+        </div>
+        <div>
+            <p class="text-sm text-gray-500 mb-1">Total de Vendas</p>
+            <p class="text-2xl font-bold text-accent">6</p>
+        </div>
+    </div>
+</div>
+                </div>
+
+                <div id="partners-table-section" class="bg-white rounded-lg border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-gray-800">Performance por Parceiro</h3>
+                            <div class="flex items-center space-x-3">
+                                <div class="relative">
+                                    <input type="text" placeholder="Buscar parceiro..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm">
+                                    <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
+                                </div>
+                                <button class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                                    <i class="fa-solid fa-download mr-2"></i>Exportar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="partners-table" class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Investimento Ads</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Squad</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nº de Leads</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPL</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Etapa 2</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Etapa 2</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Etapa 3</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Etapa 3</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Venda</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendas</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket Médio</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor Vendido</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ROAS</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Brasil Ótica - Queiroz Ótica LTDA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.003,60</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                            Alpha Squad
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">37</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 27,12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">40,54%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">26,67%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">50,00%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.075,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 2.150,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            2.14x
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">HC Ótica</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 927,74</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Beta Squad
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">182</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 5,10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4,95%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">33,33%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">33,33%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 500,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 500,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            0.54x
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">JM Prime</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 837,35</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            Gamma Squad
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">306</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 2,74</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">9,48%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">29</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">41,38%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25,00%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.773,46</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 5.320,38</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            6.35x
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Visão Clara Oftalmologia</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.245,80</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Delta Squad
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">89</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 14,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">32,58%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">29</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">48,28%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">35,71%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 2.150,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 10.750,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            8.63x
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Ótica Central</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 689,45</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                            Omega Squad
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">124</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 5,56</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">28,23%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">35</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">37,14%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">13</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">30,77%</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.425,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 5.700,00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            8.27x
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="ai-analysis-section" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div id="ai-insights-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-full mr-4">
+                                    <i class="fa-solid fa-brain text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Insights da IA</h3>
+                                    <p class="text-sm text-gray-500">Análise inteligente dos dados</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+                                    <div class="flex items-start">
+                                        <i class="fa-solid fa-lightbulb text-blue-500 mt-1 mr-3"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-blue-800">Oportunidade Identificada</p>
+                                            <p class="text-sm text-blue-700 mt-1">JM Prime apresenta o menor CPL (R$ 2,74) mas baixa taxa de agendamento. Recomenda-se otimizar o processo de qualificação de leads.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded">
+                                    <div class="flex items-start">
+                                        <i class="fa-solid fa-trophy text-green-500 mt-1 mr-3"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-green-800">Melhor Performance</p>
+                                            <p class="text-sm text-green-700 mt-1">Brasil Ótica - MARTINS SOARES tem a melhor taxa de conversão para agendamento (112,20%). Aplicar estratégias similares em outras unidades.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                                    <div class="flex items-start">
+                                        <i class="fa-solid fa-exclamation-triangle text-yellow-500 mt-1 mr-3"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-yellow-800">Atenção Necessária</p>
+                                            <p class="text-sm text-yellow-700 mt-1">HC Ótica apresenta baixa taxa de agendamento (4,95%). Revisar estratégia de tráfego e qualificação de leads.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="ai-recommendations-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-gradient-to-r from-green-500 to-teal-500 p-3 rounded-full mr-4">
+                                    <i class="fa-solid fa-robot text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Recomendações IA</h3>
+                                    <p class="text-sm text-gray-500">Ações sugeridas para otimização</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start p-3 bg-gray-50 rounded-lg">
+                                    <div class="bg-accent text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">1</div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-800">Otimizar Investimento em Ads</p>
+                                        <p class="text-sm text-gray-600 mt-1">Redistribuir 15% do budget da HC Ótica para JM Prime para maximizar ROI.</p>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">
+                                            Impacto: +18% ROI
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start p-3 bg-gray-50 rounded-lg">
+                                    <div class="bg-accent text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">2</div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-800">Melhorar Taxa de Comparecimento</p>
+                                        <p class="text-sm text-gray-600 mt-1">Implementar sistema de lembretes automáticos para aumentar comparecimento em 25%.</p>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mt-2">
+                                            Impacto: +8 vendas/mês
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start p-3 bg-gray-50 rounded-lg">
+                                    <div class="bg-accent text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">3</div>
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-800">Padronizar Processos</p>
+                                        <p class="text-sm text-gray-600 mt-1">Aplicar metodologia da unidade MARTINS SOARES nas demais unidades.</p>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 mt-2">
+                                            Impacto: +35% conversão
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center">
+                                <div class="bg-gradient-to-r from-indigo-500 to-purple-500 p-3 rounded-full mr-4">
+                                    <i class="fa-solid fa-chart-pie text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Análise Preditiva</h3>
+                                    <p class="text-sm text-gray-500">Projeções baseadas em IA para os próximos 3 meses</p>
+                                </div>
+                            </div>
+                            <button class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                                <i class="fa-solid fa-download mr-2"></i>Exportar Relatório
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border">
+                                <i class="fa-solid fa-trending-up text-3xl text-blue-500 mb-3"></i>
+                                <p class="text-sm text-gray-600 mb-1">Crescimento Previsto</p>
+                                <p class="text-2xl font-bold text-blue-600">+23%</p>
+                                <p class="text-xs text-gray-500 mt-1">Próximos 90 dias</p>
+                            </div>
+                            
+                            <div class="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border">
+                                <i class="fa-solid fa-dollar-sign text-3xl text-green-500 mb-3"></i>
+                                <p class="text-sm text-gray-600 mb-1">Faturamento Projetado</p>
+                                <p class="text-2xl font-bold text-green-600">R$ 3.2M</p>
+                                <p class="text-xs text-gray-500 mt-1">Com otimizações</p>
+                            </div>
+                            
+                            <div class="text-center p-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg border">
+                                <i class="fa-solid fa-target text-3xl text-purple-500 mb-3"></i>
+                                <p class="text-sm text-gray-600 mb-1">Taxa de Conversão</p>
+                                <p class="text-2xl font-bold text-purple-600">6.8%</p>
+                                <p class="text-xs text-gray-500 mt-1">Meta otimizada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        Highcharts.chart('sales-evolution-chart', {
+            chart: {
+                type: 'line',
+                backgroundColor: 'transparent'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                gridLineWidth: 0,
+                lineWidth: 0,
+                tickWidth: 0
+            },
+            yAxis: {
+                title: {
+                    text: 'Vendas'
+                },
+                gridLineWidth: 1,
+                gridLineColor: '#f3f4f6'
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        radius: 4
+                    },
+                    lineWidth: 3
+                }
+            },
+            series: [{
+                name: 'Vendas',
+                data: [85, 92, 98, 105, 118, 125, 132, 128, 145, 152, 168, 175],
+                color: '#4169E1'
+            }, {
+                name: 'Meta',
+                data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                color: '#10B981',
+                dashStyle: 'dash'
+            }],
+            legend: {
+                enabled: true,
+                align: 'center',
+                verticalAlign: 'bottom'
+            }
+        });
+
+        Highcharts.chart('sales-funnel-chart', {
+            chart: {
+                type: 'funnel',
+                backgroundColor: 'transparent'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: null
+            },
+            plotOptions: {
+                funnel: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b> ({point.y})',
+                        color: 'black',
+                        softConnector: true
+                    },
+                    neckWidth: '30%',
+                    neckHeight: '25%'
+                }
+            },
+            series: [{
+                name: 'Funil de Vendas',
+                data: [
+                    ['Clientes Atendidos', 100],
+                    ['Etapa 02 (25%)', 25],
+                    ['Etapa 03 (50%)', 12],
+                    ['Número de Vendas (50%)', 6]
+                ],
+                colors: ['#4169E1', '#10B981', '#F59E0B', '#EF4444']
+            }]
+        });
+
+        document.getElementById('geral-tab').addEventListener('click', function() {
+            document.getElementById('geral-tab').className = 'border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium';
+            document.getElementById('parceiro-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            document.getElementById('analise-ia-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            
+            // Show main sections
+            document.getElementById('metrics-cards').style.display = 'grid';
+            document.querySelector('.grid.grid-cols-1.lg\\:grid-cols-2.gap-6.mb-6').style.display = 'grid';
+            document.getElementById('partners-table-section').style.display = 'block';
+            document.getElementById('ai-analysis-section').classList.add('hidden');
+        });
+
+        document.getElementById('parceiro-tab').addEventListener('click', function() {
+            document.getElementById('parceiro-tab').className = 'border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium';
+            document.getElementById('geral-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            document.getElementById('analise-ia-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            
+            // Show main sections
+            document.getElementById('metrics-cards').style.display = 'grid';
+            document.querySelector('.grid.grid-cols-1.lg\\:grid-cols-2.gap-6.mb-6').style.display = 'grid';
+            document.getElementById('partners-table-section').style.display = 'block';
+            document.getElementById('ai-analysis-section').classList.add('hidden');
+        });
+
+        document.getElementById('analise-ia-tab').addEventListener('click', function() {
+            // Reset all tabs
+            document.getElementById('geral-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            document.getElementById('parceiro-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            
+            // Set active tab
+            this.className = 'border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium';
+            
+            // Hide other sections and show AI analysis
+            document.getElementById('metrics-cards').style.display = 'none';
+            document.querySelector('.grid.grid-cols-1.lg\\:grid-cols-2.gap-6.mb-6').style.display = 'none';
+            document.getElementById('partners-table-section').style.display = 'none';
+            document.getElementById('ai-analysis-section').classList.remove('hidden');
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            const month = document.getElementById('month-filter').value;
+            const year = document.getElementById('year-filter').value;
+            const quarter = document.getElementById('quarter-filter').value;
+            
+            // Add filter logic here
+            console.log('Filters applied:', { month, year, quarter });
+            
+            // Show loading state
+            this.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando...';
+            this.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                this.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Aplicar';
+                this.disabled = false;
+            }, 1000);
+        });
+        
+        document.getElementById('reset-filters').addEventListener('click', function() {
+            document.getElementById('month-filter').value = '';
+            document.getElementById('year-filter').value = '';
+            document.getElementById('quarter-filter').value = '';
+        });
+    </script>
+
+</body></html>

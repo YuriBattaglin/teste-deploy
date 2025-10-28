@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#708090',
+                        'brand-accent': '#4169E1',
+                        'brand-bg': '#F8FAFC',
+                        'brand-card': '#FFFFFF',
+                        'brand-border': '#E2E8F0',
+                        'brand-text': '#334155',
+                        'brand-text-light': '#64748B',
+                        'brand-sidebar': '#1E293B',
+                        'brand-green': '#10B981',
+                        'brand-green-light': '#D1FAE5',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { display: none; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F8FAFC;
+            color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-brand-bg">
+
+    <div id="dashboard-layout" class="flex w-full">
+        <aside id="sidebar" class="w-64 bg-brand-sidebar h-screen fixed top-0 left-0 p-5 flex flex-col z-10">
+            <div id="sidebar-header" class="flex items-center gap-3 mb-8 pb-5 border-b border-slate-600">
+                <i class="fa-solid fa-chart-line text-brand-green text-2xl"></i>
+                <h1 class="text-white text-xl font-bold">SCALE ONE</h1>
+            </div>
+            <nav id="sidebar-nav" class="flex flex-col h-full">
+                <ul class="space-y-1">
+                    <li class="mb-3"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Início</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-house w-4 text-center"></i>
+                            <span>Dashboard</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">PGM</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-white bg-brand-green rounded-md transition-colors font-medium cursor-pointer text-sm">
+                            <i class="fa-solid fa-bullseye w-4 text-center"></i>
+                            <span>Plans and Goals Management</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Cadastros</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-calendar-day w-4 text-center"></i>
+                            <span>Cadastro Diário</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-percentage w-4 text-center"></i>
+                            <span>Comissões</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-target w-4 text-center"></i>
+                            <span>Metas</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Análise</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-chart-bar w-4 text-center"></i>
+                            <span>Painel PGM</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-user-tie w-4 text-center"></i>
+                            <span>Painel Vendedor</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Segurança</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                           <i class="fa-solid fa-users w-4 text-center"></i>
+                           <span>Usuários</span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="mt-auto pt-5 border-t border-slate-600">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors text-sm">
+                        <i class="fa-solid fa-arrow-right-from-bracket w-4 text-center"></i>
+                        <span>Sair</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="ml-64 w-[calc(100%-16rem)] p-5">
+            <header id="header" class="flex justify-between items-center mb-8 bg-brand-card p-5 rounded-lg border border-brand-border">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-bullseye text-brand-accent text-xl"></i>
+                    <h2 class="text-2xl font-bold text-brand-text">Plans and Goals Management</h2>
+                </div>
+                <div id="header-controls" class="flex items-center gap-6">
+                    <div id="filters" class="flex items-center gap-3 text-sm">
+                        <i class="fa-solid fa-filter text-brand-text-light"></i>
+                        <span class="text-brand-text-light font-medium">Filtros:</span>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent">
+                            <option>outubro</option>
+                            <option>novembro</option>
+                            <option>dezembro</option>
+                        </select>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent">
+                            <option>2025</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                        </select>
+                        <button class="bg-brand-accent hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md transition-colors">Aplicar</button>
+                        <button class="bg-brand-card hover:bg-gray-50 border border-brand-border text-brand-text font-medium px-4 py-2 rounded-md transition-colors">Limpar</button>
+                    </div>
+                    <div id="user-profile" class="flex items-center gap-3 border-l border-brand-border pl-6">
+                        <div class="text-right">
+                            <p class="font-medium text-brand-text">Gustavo</p>
+                            <p class="text-xs text-brand-text-light">Mundo Óptico</p>
+                        </div>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-brand-border">
+                    </div>
+                </div>
+            </header>
+
+            <section id="pgm-overview" class="bg-brand-card p-8 rounded-lg border border-brand-border mb-8">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-brand-accent bg-opacity-10 rounded-full mb-4">
+                        <i class="fa-solid fa-bullseye text-brand-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-brand-text mb-3">O que é o PGM?</h3>
+                    <p class="text-brand-text-light text-lg max-w-3xl mx-auto leading-relaxed">
+                        O Plans and Goals Management é um sistema completo de gestão estratégica que permite o planejamento, 
+                        acompanhamento e análise de metas organizacionais. Com ele, você pode definir objetivos claros, 
+                        monitorar o progresso em tempo real e tomar decisões baseadas em dados precisos.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div id="pgm-benefit-1" class="text-center p-6 bg-brand-bg rounded-lg">
+                        <i class="fa-solid fa-chart-line text-brand-green text-3xl mb-4"></i>
+                        <h4 class="font-bold text-brand-text mb-2">Acompanhamento Visual</h4>
+                        <p class="text-brand-text-light text-sm">Visualize o progresso das suas metas através de gráficos e relatórios intuitivos</p>
+                    </div>
+                    <div id="pgm-benefit-2" class="text-center p-6 bg-brand-bg rounded-lg">
+                        <i class="fa-solid fa-users-gear text-brand-accent text-3xl mb-4"></i>
+                        <h4 class="font-bold text-brand-text mb-2">Gestão Colaborativa</h4>
+                        <p class="text-brand-text-light text-sm">Trabalhe em equipe com atribuição de responsabilidades e prazos</p>
+                    </div>
+                    <div id="pgm-benefit-3" class="text-center p-6 bg-brand-bg rounded-lg">
+                        <i class="fa-solid fa-brain text-brand-primary text-3xl mb-4"></i>
+                        <h4 class="font-bold text-brand-text mb-2">Insights Inteligentes</h4>
+                        <p class="text-brand-text-light text-sm">Receba sugestões automáticas para otimização de resultados</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pgm-shortcuts" class="mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold text-brand-text">Acesso Rápido - Funcionalidades</h3>
+                    <button class="bg-brand-accent hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Nova Meta</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div id="shortcut-metas" class="bg-brand-card p-6 rounded-lg border border-brand-border hover:shadow-lg transition-shadow cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bg-green-50 p-3 rounded-lg group-hover:bg-green-100 transition-colors">
+                                <i class="fa-solid fa-target text-brand-green text-xl"></i>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brand-text-light group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <h4 class="font-bold text-brand-text mb-2">Gerenciar Metas</h4>
+                        <p class="text-brand-text-light text-sm mb-3">Crie, edite e acompanhe suas metas estratégicas</p>
+                        <div class="text-xs text-brand-text-light">
+                            <span class="bg-brand-green bg-opacity-10 text-brand-green px-2 py-1 rounded">12 Ativas</span>
+                        </div>
+                    </div>
+
+                    <div id="shortcut-planos" class="bg-brand-card p-6 rounded-lg border border-brand-border hover:shadow-lg transition-shadow cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bg-blue-50 p-3 rounded-lg group-hover:bg-blue-100 transition-colors">
+                                <i class="fa-solid fa-map text-brand-accent text-xl"></i>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brand-text-light group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <h4 class="font-bold text-brand-text mb-2">Planos de Ação</h4>
+                        <p class="text-brand-text-light text-sm mb-3">Defina estratégias e cronogramas detalhados</p>
+                        <div class="text-xs text-brand-text-light">
+                            <span class="bg-brand-accent bg-opacity-10 text-brand-accent px-2 py-1 rounded">8 Em Andamento</span>
+                        </div>
+                    </div>
+
+                    <div id="shortcut-indicadores" class="bg-brand-card p-6 rounded-lg border border-brand-border hover:shadow-lg transition-shadow cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bg-purple-50 p-3 rounded-lg group-hover:bg-purple-100 transition-colors">
+                                <i class="fa-solid fa-chart-bar text-purple-600 text-xl"></i>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brand-text-light group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <h4 class="font-bold text-brand-text mb-2">Indicadores KPI</h4>
+                        <p class="text-brand-text-light text-sm mb-3">Configure e monitore indicadores de performance</p>
+                        <div class="text-xs text-brand-text-light">
+                            <span class="bg-purple-600 bg-opacity-10 text-purple-600 px-2 py-1 rounded">24 Configurados</span>
+                        </div>
+                    </div>
+
+                    <div id="shortcut-relatorios" class="bg-brand-card p-6 rounded-lg border border-brand-border hover:shadow-lg transition-shadow cursor-pointer group">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bg-orange-50 p-3 rounded-lg group-hover:bg-orange-100 transition-colors">
+                                <i class="fa-solid fa-file-chart-line text-orange-600 text-xl"></i>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-brand-text-light group-hover:text-brand-accent transition-colors"></i>
+                        </div>
+                        <h4 class="font-bold text-brand-text mb-2">Relatórios</h4>
+                        <p class="text-brand-text-light text-sm mb-3">Gere relatórios personalizados e análises</p>
+                        <div class="text-xs text-brand-text-light">
+                            <span class="bg-orange-600 bg-opacity-10 text-orange-600 px-2 py-1 rounded">15 Disponíveis</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pgm-advanced-features" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div id="feature-automation" class="bg-brand-card p-6 rounded-lg border border-brand-border">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-brand-primary bg-opacity-10 p-3 rounded-lg">
+                            <i class="fa-solid fa-robot text-brand-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-text">Automação Inteligente</h4>
+                            <p class="text-brand-text-light text-sm">Configure alertas e ações automáticas</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">Notificações por email e SMS</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">Escalação automática de tarefas</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">Relatórios programados</span>
+                        </li>
+                    </ul>
+                    <button class="w-full mt-4 bg-brand-primary hover:bg-gray-600 text-white font-medium py-2 rounded-md transition-colors">
+                        Configurar Automação
+                    </button>
+                </div>
+
+                <div id="feature-integration" class="bg-brand-card p-6 rounded-lg border border-brand-border">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-brand-accent bg-opacity-10 p-3 rounded-lg">
+                            <i class="fa-solid fa-puzzle-piece text-brand-accent text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-brand-text">Integrações</h4>
+                            <p class="text-brand-text-light text-sm">Conecte com suas ferramentas favoritas</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">CRM e sistemas de vendas</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">Planilhas e bancos de dados</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brand-green"></i>
+                            <span class="text-brand-text-light">APIs e webhooks</span>
+                        </li>
+                    </ul>
+                    <button class="w-full mt-4 bg-brand-accent hover:bg-blue-600 text-white font-medium py-2 rounded-md transition-colors">
+                        Ver Integrações
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

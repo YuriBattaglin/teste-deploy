@@ -1,0 +1,104 @@
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+:root {
+    --toast-bg: #ffffff;
+    --toast-bg-hover: #e5e7eb;
+    --toast-text: #111111;
+    --toast-border: #e5e7eb;
+    --toast-radius: 0.5rem;
+
+    --swal-bg: #ffffff;
+    --swal-color: #111111;
+    --swal-border: #e5e7eb;
+}
+
+.dark {
+    --toast-bg: #151F2C;
+    --toast-bg-hover: rgb(44, 47, 82);
+    --toast-text: #f5f5f5;
+    --toast-border: #283941ff;
+
+    --swal-bg: #0F151F;
+    --swal-color: #f5f5f5;
+    --swal-border: #283941ff;
+}
+
+.swal2-popup {
+    background-color: var(--swal-bg) !important;
+    color: var(--swal-color) !important;
+    border: 1px solid var(--swal-border) !important;
+}
+
+.custom-autocomplete .el-input__wrapper   {
+  width: 100% !important;
+  padding: 0.3rem 0.75rem !important; 
+  border: 1px solid #E5E7EB !important; 
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+}
+
+.custom-autocomplete .el-input__inner {
+  color: #000 !important;
+  font-size: 1rem; 
+}
+.custom-autocomplete .is-focus {
+  box-shadow: 0 0 0 2px #26CFBF !important; 
+}
+
+.el-autocomplete__popper .el-autocomplete-suggestion li,
+.el-autocomplete__popper .el-autocomplete-suggestion li * {
+  color: #000 !important;
+}
+
+.dark .custom-autocomplete .el-input__wrapper  {
+  background-color: #0F151F !important; 
+  color: #fff !important;
+  border-color: #283941ff !important;   
+}
+
+.dark .custom-autocomplete .el-input__inner  {
+  color: #fff !important;
+}
+
+.dark .el-tooltip.el-autocomplete__popper {
+  background-color: #0F151F !important;
+  color: #E6EEF8 !important;
+  border: 1px solid #283941ff !important;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6) !important;
+}
+
+.dark .el-autocomplete__popper .el-autocomplete-suggestion li.highlighted,
+.dark .el-autocomplete__popper .el-autocomplete-suggestion li:hover {
+  background-color: rgba(255,255,255,0.04) !important;
+   color: #E6EEF8 !important;
+}
+
+.dark .el-autocomplete__popper .el-autocomplete-suggestion li,
+.dark .el-autocomplete__popper .el-autocomplete-suggestion li * {
+  color: #E6EEF8 !important;
+}
+
+.el-popper__arrow,
+.popper__arrow,
+.el-popper__arrow::before,
+.popper__arrow::before,
+.el-popper__arrow::after,
+.popper__arrow::after {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    border: 0 !important;
+    content: none !important;
+}
+
+.el-autocomplete__popper {
+  margin-top: 0 !important;
+}

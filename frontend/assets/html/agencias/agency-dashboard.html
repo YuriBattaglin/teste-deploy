@@ -1,0 +1,265 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+                        <p class="text-gray-600">Visão geral do sistema</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="dashboard-content" class="flex-1 p-5 overflow-auto">
+                <div id="stats-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    <div class="bg-white p-5 rounded-lg border border-gray-200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Total Usuários</p>
+                <p class="text-2xl font-bold text-gray-800">1,247</p>
+            </div>
+            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-users text-accent"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-lg border border-gray-200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Parceiros Ativos</p>
+                <p class="text-2xl font-bold text-gray-800">89</p>
+            </div>
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-handshake text-green-600"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-lg border border-gray-200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Squads</p>
+                <p class="text-2xl font-bold text-gray-800">24</p>
+            </div>
+            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-people-group text-purple-600"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-lg border border-gray-200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm">Tráfego Total</p>
+                <p class="text-2xl font-bold text-gray-800">156.7K</p>
+            </div>
+            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-traffic-light text-orange-600"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <div id="charts-section" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <div id="performance-chart-card" class="bg-white p-5 rounded-lg border border-gray-200">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">Investimento em Tráfego/Mês</h3>
+    <div id="performance-chart" class="h-64"></div>
+</div>
+
+                    <div id="traffic-chart-card" class="bg-white p-5 rounded-lg border border-gray-200">
+    <h3 class="text-lg font-bold text-gray-800 mb-4">Ranking de Faturamento dos Parceiros</h3>
+    <div class="space-y-3">
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-white font-bold text-sm">1</div>
+                <div>
+                    <p class="font-semibold text-gray-800">TechSolutions</p>
+                    <p class="text-sm text-gray-600">Tecnologia</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">R$ 245.800</p>
+                <p class="text-sm text-green-600">+12%</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                <div>
+                    <p class="font-semibold text-gray-800">Digital Marketing Pro</p>
+                    <p class="text-sm text-gray-600">Marketing</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">R$ 198.500</p>
+                <p class="text-sm text-green-600">+8%</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                <div>
+                    <p class="font-semibold text-gray-800">Growth Agency</p>
+                    <p class="text-sm text-gray-600">Consultoria</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">R$ 176.300</p>
+                <p class="text-sm text-red-600">-3%</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">4</div>
+                <div>
+                    <p class="font-semibold text-gray-800">StartupBoost</p>
+                    <p class="text-sm text-gray-600">Aceleração</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">R$ 142.700</p>
+                <p class="text-sm text-green-600">+15%</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">5</div>
+                <div>
+                    <p class="font-semibold text-gray-800">InnovateLab</p>
+                    <p class="text-sm text-gray-600">Inovação</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <p class="font-bold text-gray-800">R$ 128.900</p>
+                <p class="text-sm text-green-600">+6%</p>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        Highcharts.chart('performance-chart', {
+            chart: { type: 'line' },
+            title: { text: null },
+            credits: { enabled: false },
+            xAxis: {
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun']
+            },
+            yAxis: {
+                title: { text: 'Performance' }
+            },
+            series: [{
+                name: 'Performance',
+                data: [65, 78, 85, 92, 88, 95],
+                color: '#4169E1'
+            }]
+        });
+
+        Highcharts.chart('traffic-chart', {
+            chart: { type: 'pie' },
+            title: { text: null },
+            credits: { enabled: false },
+            series: [{
+                data: [
+                    { name: 'Orgânico', y: 45, color: '#4169E1' },
+                    { name: 'Pago', y: 30, color: '#708090' },
+                    { name: 'Social', y: 15, color: '#10B981' },
+                    { name: 'Direto', y: 10, color: '#F59E0B' }
+                ]
+            }]
+        });
+    </script>
+
+</body></html>

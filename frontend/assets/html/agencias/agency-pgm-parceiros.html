@@ -1,0 +1,807 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1",
+        "light-purple": "#A29BFE",
+        "light-purple-hover": "#867AF0"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Dashboard PGM</h2>
+                        <p class="text-gray-600">Visão geral de todos os parceiros e performance</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="pgm-dashboard-content" class="flex-1 p-5 overflow-auto">
+                <div id="view-tabs" class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="border-b border-gray-200 flex-1">
+                            <nav class="-mb-px flex space-x-8">
+                                <button id="geral-tab" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium">
+                                    Geral
+                                </button>
+                                <button id="parceiro-tab" class="border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium">
+                                    Parceiro
+                                </button>
+                            </nav>
+                        </div>
+                        
+                        <div id="global-filters" class="flex items-center space-x-3 ml-6">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-filter text-gray-400"></i>
+                                <span class="text-sm text-gray-600 font-medium">Filtros:</span>
+                            </div>
+                            
+                            <select id="partner-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                <option value="">Selecionar Parceiro</option>
+                                <option value="brasil-otica">Brasil Ótica - Queiroz Ótica LTDA</option>
+                                <option value="hc-otica">HC Ótica</option>
+                                <option value="jm-prime">JM Prime</option>
+                                <option value="otica-visual">Ótica Visual</option>
+                                <option value="prime-vision">Prime Vision</option>
+                            </select>
+                            
+                            <select id="month-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                <option value="">Mês</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                            
+                            <select id="year-filter" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                <option value="">Ano</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                            </select>
+                            
+                            <button id="apply-filters" class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                                <i class="fa-solid fa-check mr-2"></i>Aplicar
+                            </button>
+                            
+                            <button id="reset-filters" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors">
+                                <i class="fa-solid fa-refresh mr-2"></i>Limpar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="geral-content" class="hidden">
+                    <div id="metrics-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
+                        <div id="partners-active-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Parceiros Ativos</p>
+                                    <p class="text-lg font-bold text-gray-900">28</p>
+                                </div>
+                                <div class="bg-blue-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-handshake text-blue-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="total-sellers-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Total Vendedores</p>
+                                    <p class="text-lg font-bold text-gray-900">156</p>
+                                </div>
+                                <div class="bg-green-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-users text-green-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="total-sales-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Total de Vendas</p>
+                                    <p class="text-lg font-bold text-gray-900">1,247</p>
+                                </div>
+                                <div class="bg-purple-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-shopping-cart text-purple-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="total-revenue-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Faturamento Total</p>
+                                    <p class="text-lg font-bold text-gray-900">R$ 2.8M</p>
+                                </div>
+                                <div class="bg-yellow-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-dollar-sign text-yellow-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="conversion-rate-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Taxa de Conversão</p>
+                                    <p class="text-lg font-bold text-gray-900">4.2%</p>
+                                </div>
+                                <div class="bg-indigo-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-percentage text-indigo-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="average-ticket-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Ticket Médio</p>
+                                    <p class="text-lg font-bold text-gray-900">R$ 2,247</p>
+                                </div>
+                                <div class="bg-pink-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-ticket text-pink-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="ads-investment-card" class="bg-white p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-xs font-medium text-gray-600">Investimento em Ads</p>
+                                    <p class="text-lg font-bold text-gray-900">R$ 485K</p>
+                                </div>
+                                <div class="bg-orange-100 p-2 rounded-full">
+                                    <i class="fa-solid fa-bullhorn text-orange-600 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div id="sales-evolution-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-gray-800">Evolução de Vendas</h3>
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <option>Últimos 12 meses</option>
+                                    <option>Últimos 6 meses</option>
+                                    <option>Últimos 3 meses</option>
+                                </select>
+                            </div>
+                            <div id="sales-evolution-chart" class="h-80"></div>
+                        </div>
+
+                        <div id="sales-funnel-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Funil de Vendas</h3>
+                                    <p class="text-sm text-gray-500">Taxa de conversão por etapa</p>
+                                </div>
+                                <button class="flex items-center text-gray-600 hover:text-gray-800">
+                                    <i class="fa-solid fa-eye mr-2"></i>
+                                    <span class="text-sm">Detalhes</span>
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fa-solid fa-users text-gray-400 mr-3"></i>
+                                        <span class="text-sm font-medium text-gray-700">Clientes Atendidos</span>
+                                    </div>
+                                    <span class="text-lg font-bold text-gray-900">100</span>
+                                </div>
+                                <div class="w-full bg-accent rounded-full h-4"></div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fa-solid fa-calendar text-gray-400 mr-3"></i>
+                                        <span class="text-sm font-medium text-gray-700">Agendamento</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-lg font-bold text-gray-900">25</span>
+                                        <span class="text-sm font-medium text-orange-500">25%</span>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4">
+                                    <div class="bg-gray-300 h-4 rounded-full" style="width: 25%"></div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fa-solid fa-calendar-check text-gray-400 mr-3"></i>
+                                        <span class="text-sm font-medium text-gray-700">Comparecimento</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-lg font-bold text-gray-900">12</span>
+                                        <span class="text-sm font-medium text-orange-500">48%</span>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4">
+                                    <div class="bg-gray-300 h-4 rounded-full" style="width: 12%"></div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <i class="fa-solid fa-chart-line text-gray-400 mr-3"></i>
+                                        <span class="text-sm font-medium text-gray-700">Número de Vendas</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-lg font-bold text-gray-900">6</span>
+                                        <span class="text-sm font-medium text-orange-500">50%</span>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-4">
+                                    <div class="bg-gray-300 h-4 rounded-full" style="width: 6%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-gray-200">
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Taxa de Conversão</p>
+                                    <p class="text-2xl font-bold text-green-600">6.0%</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 mb-1">Total de Vendas</p>
+                                    <p class="text-2xl font-bold text-accent">6</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="partners-table-section" class="bg-white rounded-lg border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-gray-800">Performance por Parceiro</h3>
+                                <div class="flex items-center space-x-3">
+                                    <div class="relative">
+                                        <input type="text" placeholder="Buscar parceiro..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm">
+                                        <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400 text-sm"></i>
+                                    </div>
+                                    <button class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">
+                                        <i class="fa-solid fa-download mr-2"></i>Exportar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="partners-table" class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unidade</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Investimento Ads</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nº de Leads</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CPL</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Agend.</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nº de Agend.</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Comp.</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comparecimento</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taxa de Conv. Venda</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vendas</th>
+                                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket Médio</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Brasil Ótica - Queiroz Ótica LTDA</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">CLÍNICA</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.003,60</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">37</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 27,12</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">40,54%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">26,67%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">50,00%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.075,00</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Brasil Ótica - Queiroz Ótica LTDA</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">MARTINS SOARES</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 336,08</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">41</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 8,20</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">112,20%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">46</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">32,61%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">15</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">26,67%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.063,75</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Brasil Ótica - Queiroz Ótica LTDA</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">ALTO JEQUITIBÁ</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 305,36</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">74</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 4,13</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">70,27%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">52</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25,00%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">13</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">23,08%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.580,00</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">HC Ótica</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Única</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 927,74</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">182</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 5,10</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">4,95%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">9</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">33,33%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">33,33%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 500,00</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">JM Prime</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Única</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 837,35</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">306</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 2,74</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">9,48%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">29</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">41,38%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">12</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">25,00%</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">3</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">R$ 1.773,46</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="parceiro-content">
+                    <div id="partner-header" class="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-handshake text-white text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">Brasil Ótica - Queiroz Ótica LTDA</h3>
+                                    <p class="text-gray-600">Cliente desde Janeiro 2023</p>
+                                    <div class="flex items-center space-x-4 mt-2">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <i class="fa-solid fa-circle text-green-400 mr-1 text-xs"></i>
+                                            Ativo
+                                        </span>
+                                        <span class="text-sm text-gray-500">3 unidades</span>
+                                        <span class="text-sm text-gray-500">12 vendedores</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-200 transition-colors">
+                                    <i class="fa-solid fa-edit mr-2"></i>Editar
+                                </button>
+                                <button class="bg-accent text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                                    <i class="fa-solid fa-chart-line mr-2"></i>Relatório Detalhado
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="partner-metrics-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                        <div id="partner-investment-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-orange-100 p-3 rounded-full">
+                                    <i class="fa-solid fa-bullhorn text-orange-600 text-lg"></i>
+                                </div>
+                                <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">+12.5%</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Investimento em Ads</p>
+                                <p class="text-2xl font-bold text-gray-900">R$ 1.645,04</p>
+                                <p class="text-xs text-gray-500 mt-1">Últimos 30 dias</p>
+                            </div>
+                        </div>
+
+                        <div id="partner-leads-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-full">
+                                    <i class="fa-solid fa-user-plus text-blue-600 text-lg"></i>
+                                </div>
+                                <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">+8.3%</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total de Leads</p>
+                                <p class="text-2xl font-bold text-gray-900">152</p>
+                                <p class="text-xs text-gray-500 mt-1">CPL médio: R$ 10.82</p>
+                            </div>
+                        </div>
+
+                        <div id="partner-sales-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-green-100 p-3 rounded-full">
+                                    <i class="fa-solid fa-shopping-cart text-green-600 text-lg"></i>
+                                </div>
+                                <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">+15.2%</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Vendas Realizadas</p>
+                                <p class="text-2xl font-bold text-gray-900">9</p>
+                                <p class="text-xs text-gray-500 mt-1">Taxa de conversão: 5.92%</p>
+                            </div>
+                        </div>
+
+                        <div id="partner-revenue-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-purple-100 p-3 rounded-full">
+                                    <i class="fa-solid fa-dollar-sign text-purple-600 text-lg"></i>
+                                </div>
+                                <span class="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full">+22.1%</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Faturamento</p>
+                                <p class="text-2xl font-bold text-gray-900">R$ 9.718,75</p>
+                                <p class="text-xs text-gray-500 mt-1">Ticket médio: R$ 1.079,86</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div id="partner-funnel-card" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Funil de Vendas - Brasil Ótica</h3>
+                                    <p class="text-sm text-gray-500">Performance detalhada do parceiro</p>
+                                </div>
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <option>Últimos 30 dias</option>
+                                    <option>Últimos 7 dias</option>
+                                    <option>Últimos 90 dias</option>
+                                </select>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center mr-4">
+                                            <i class="fa-solid fa-users text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">Leads Gerados</span>
+                                            <p class="text-sm text-gray-500">Total de leads capturados</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-bold text-gray-900">152</span>
+                                        <p class="text-sm text-green-600 font-medium">100%</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-accent rounded-full h-3"></div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fa-solid fa-calendar text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">Agendamentos</span>
+                                            <p class="text-sm text-gray-500">Consultas agendadas</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-bold text-gray-900">113</span>
+                                        <p class="text-sm text-blue-600 font-medium">74.34%</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-blue-500 h-3 rounded-full" style="width: 74.34%"></div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fa-solid fa-calendar-check text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">Comparecimentos</span>
+                                            <p class="text-sm text-gray-500">Clientes que compareceram</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-bold text-gray-900">32</span>
+                                        <p class="text-sm text-green-600 font-medium">28.32%</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-green-500 h-3 rounded-full" style="width: 21.05%"></div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fa-solid fa-shopping-cart text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">Vendas Fechadas</span>
+                                            <p class="text-sm text-gray-500">Conversões finalizadas</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-2xl font-bold text-gray-900">9</span>
+                                        <p class="text-sm text-purple-600 font-medium">28.13%</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-purple-500 h-3 rounded-full" style="width: 5.92%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-500 mb-1">Taxa Geral de Conversão</p>
+                                    <p class="text-xl font-bold text-accent">5.92%</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-500 mb-1">ROI</p>
+                                    <p class="text-xl font-bold text-green-600">490.7%</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-500 mb-1">CAC</p>
+                                    <p class="text-xl font-bold text-orange-600">R$ 182.78</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="partner-performance-chart" class="bg-white p-6 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-gray-800">Performance Mensal</h3>
+                                <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                                    <option>2024</option>
+                                    <option>2023</option>
+                                </select>
+                            </div>
+                            <div id="partner-performance-chart-container" class="h-80"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        Highcharts.chart('sales-evolution-chart', {
+            chart: {
+                type: 'line',
+                backgroundColor: 'transparent'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                gridLineWidth: 0,
+                lineWidth: 0,
+                tickWidth: 0
+            },
+            yAxis: {
+                title: {
+                    text: 'Vendas'
+                },
+                gridLineWidth: 1,
+                gridLineColor: '#f3f4f6'
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        radius: 4
+                    },
+                    lineWidth: 3
+                }
+            },
+            series: [{
+                name: 'Vendas',
+                data: [85, 92, 98, 105, 118, 125, 132, 128, 145, 152, 168, 175],
+                color: '#4169E1'
+            }, {
+                name: 'Meta',
+                data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                color: '#10B981',
+                dashStyle: 'dash'
+            }],
+            legend: {
+                enabled: true,
+                align: 'center',
+                verticalAlign: 'bottom'
+            }
+        });
+
+        Highcharts.chart('partner-performance-chart-container', {
+            chart: {
+                type: 'column',
+                backgroundColor: 'transparent'
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                gridLineWidth: 0
+            },
+            yAxis: {
+                title: {
+                    text: 'Valores'
+                },
+                gridLineWidth: 1,
+                gridLineColor: '#f3f4f6'
+            },
+            plotOptions: {
+                column: {
+                    borderRadius: 4,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                name: 'Investimento',
+                data: [800, 950, 1100, 1200, 1350, 1400, 1500, 1450, 1600, 1550, 1645, 1700],
+                color: '#F59E0B'
+            }, {
+                name: 'Faturamento',
+                data: [3200, 4200, 5800, 6400, 7200, 8100, 8900, 8500, 9200, 9100, 9718, 10200],
+                color: '#10B981'
+            }],
+            legend: {
+                enabled: true,
+                align: 'center',
+                verticalAlign: 'bottom'
+            }
+        });
+
+        function showGeralContent() {
+            document.getElementById('geral-content').classList.remove('hidden');
+            document.getElementById('parceiro-content').classList.add('hidden');
+        }
+
+        function showParceiroContent() {
+            document.getElementById('geral-content').classList.add('hidden');
+            document.getElementById('parceiro-content').classList.remove('hidden');
+        }
+
+        document.getElementById('geral-tab').addEventListener('click', function() {
+            document.getElementById('geral-tab').className = 'border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium';
+            document.getElementById('parceiro-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            showGeralContent();
+        });
+
+        document.getElementById('parceiro-tab').addEventListener('click', function() {
+            document.getElementById('parceiro-tab').className = 'border-b-2 border-accent text-accent py-2 px-1 text-sm font-medium';
+            document.getElementById('geral-tab').className = 'border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-2 px-1 text-sm font-medium';
+            showParceiroContent();
+        });
+
+        document.getElementById('apply-filters').addEventListener('click', function() {
+            const partner = document.getElementById('partner-filter').value;
+            const month = document.getElementById('month-filter').value;
+            const year = document.getElementById('year-filter').value;
+            
+            console.log('Filters applied:', { partner, month, year });
+            
+            this.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Carregando...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Aplicar';
+                this.disabled = false;
+            }, 1000);
+        });
+        
+        document.getElementById('reset-filters').addEventListener('click', function() {
+            document.getElementById('partner-filter').value = '';
+            document.getElementById('month-filter').value = '';
+            document.getElementById('year-filter').value = '';
+        });
+
+        showParceiroContent();
+    </script>
+
+
+</body></html>

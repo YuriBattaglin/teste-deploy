@@ -1,0 +1,266 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Squads</h2>
+                        <p class="text-gray-600">Gerenciamento de equipes e projetos</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="squads-content" class="flex-1 p-5 overflow-auto">
+                <div id="squads-header" class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <input type="text" placeholder="Buscar squads..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent w-80">
+                                <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                <option>Todos os status</option>
+                                <option>Ativo</option>
+                                <option>Em desenvolvimento</option>
+                                <option>Finalizado</option>
+                                <option>Pausado</option>
+                            </select>
+                        </div>
+                        <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center">
+                            <i class="fa-solid fa-plus mr-2"></i>Novo Squad
+                        </button>
+                    </div>
+                </div>
+
+                <div id="squads-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="squad-card-1" class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-rocket text-blue-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Squad Alpha</h3>
+                                    <p class="text-sm text-gray-600">Desenvolvimento Mobile</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Responsável pelo desenvolvimento do aplicativo mobile principal da empresa.</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-gray-600">5 membros</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <p class="text-gray-600">Líder: <span class="text-gray-800 font-medium">João Silva</span></p>
+                                <p class="text-gray-600">Prazo: <span class="text-gray-800">15/02/2024</span></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="squad-card-2" class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-palette text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Squad Beta</h3>
+                                    <p class="text-sm text-gray-600">Design &amp; UX/UI</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Focado na criação de interfaces e experiências de usuário inovadoras.</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-gray-600">3 membros</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <p class="text-gray-600">Líder: <span class="text-gray-800 font-medium">Marina Costa</span></p>
+                                <p class="text-gray-600">Prazo: <span class="text-gray-800">28/02/2024</span></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="squad-card-3" class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-chart-line text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Squad Gamma</h3>
+                                    <p class="text-sm text-gray-600">Analytics &amp; Data</p>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Em desenvolvimento</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Especializado em análise de dados e business intelligence.</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-gray-600">4 membros</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <p class="text-gray-600">Líder: <span class="text-gray-800 font-medium">Carlos Santos</span></p>
+                                <p class="text-gray-600">Prazo: <span class="text-gray-800">10/03/2024</span></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="squad-card-4" class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-shield-halved text-orange-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Squad Delta</h3>
+                                    <p class="text-sm text-gray-600">DevOps &amp; Security</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Ativo</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Responsável pela infraestrutura, deploy e segurança dos sistemas.</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-gray-600">2 membros</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <p class="text-gray-600">Líder: <span class="text-gray-800 font-medium">Roberto Lima</span></p>
+                                <p class="text-gray-600">Prazo: <span class="text-gray-800">05/02/2024</span></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="squad-card-5" class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa-solid fa-bullhorn text-red-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">Squad Epsilon</h3>
+                                    <p class="text-sm text-gray-600">Marketing Digital</p>
+                                </div>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Finalizado</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Focado em estratégias de marketing digital e campanhas online.</p>
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-gray-600">6 membros</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm">
+                                <p class="text-gray-600">Líder: <span class="text-gray-800 font-medium">Ana Ferreira</span></p>
+                                <p class="text-gray-600">Prazo: <span class="text-gray-800">20/01/2024</span></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body></html>

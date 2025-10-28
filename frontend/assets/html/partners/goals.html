@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        roboto: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#708090',
+                        'brand-accent': '#4169E1',
+                        'brand-bg': '#F8FAFC',
+                        'brand-card': '#FFFFFF',
+                        'brand-border': '#E2E8F0',
+                        'brand-text': '#334155',
+                        'brand-text-light': '#64748B',
+                        'brand-sidebar': '#1E293B',
+                        'brand-green': '#10B981',
+                        'brand-green-light': '#D1FAE5',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { display: none; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F8FAFC;
+            color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-brand-bg">
+
+    <div id="dashboard-layout" class="flex w-full">
+        <aside id="sidebar" class="w-64 bg-brand-sidebar h-screen fixed top-0 left-0 p-5 flex flex-col z-10">
+            <div id="sidebar-header" class="flex items-center gap-3 mb-8 pb-5 border-b border-slate-600">
+                <i class="fa-solid fa-chart-line text-brand-green text-2xl"></i>
+                <h1 class="text-white text-xl font-bold">SCALE ONE</h1>
+            </div>
+            <nav id="sidebar-nav" class="flex flex-col h-full">
+                <ul class="space-y-1">
+                    <li class="mb-3"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Início</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-house w-4 text-center"></i>
+                            <span>Dashboard</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">PGM</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-bullseye w-4 text-center"></i>
+                            <span>Plans and Goals Management</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Cadastros</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-calendar-day w-4 text-center"></i>
+                            <span>Cadastro Diário</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-percentage w-4 text-center"></i>
+                            <span>Comissões</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-white bg-brand-green rounded-md transition-colors font-medium cursor-pointer text-sm">
+                            <i class="fa-solid fa-target w-4 text-center"></i>
+                            <span>Metas</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Análise</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-chart-bar w-4 text-center"></i>
+                            <span>Painel PGM</span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                            <i class="fa-solid fa-user-tie w-4 text-center"></i>
+                            <span>Painel Vendedor</span>
+                        </span>
+                    </li>
+                    
+                    <li class="mb-3 mt-5"><span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Segurança</span></li>
+                    <li>
+                        <span class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors cursor-pointer text-sm">
+                           <i class="fa-solid fa-users w-4 text-center"></i>
+                           <span>Usuários</span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="mt-auto pt-5 border-t border-slate-600">
+                    <button class="w-full flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 hover:text-white rounded-md transition-colors text-sm">
+                        <i class="fa-solid fa-arrow-right-from-bracket w-4 text-center"></i>
+                        <span>Sair</span>
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="ml-64 w-[calc(100%-16rem)] p-5">
+            <header id="header" class="flex justify-between items-center mb-8 bg-brand-card p-5 rounded-lg border border-brand-border">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-target text-brand-accent text-xl"></i>
+                    <h2 class="text-2xl font-bold text-brand-text">Metas</h2>
+                </div>
+                <div id="header-controls" class="flex items-center gap-6">
+                    <div id="filters" class="flex items-center gap-3 text-sm">
+                        <i class="fa-solid fa-filter text-brand-text-light"></i>
+                        <span class="text-brand-text-light font-medium">Filtros:</span>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent">
+                            <option>outubro</option>
+                            <option>novembro</option>
+                            <option>dezembro</option>
+                        </select>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent">
+                            <option>2025</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                        </select>
+                        <button class="bg-brand-accent hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md transition-colors">Aplicar</button>
+                        <button class="bg-brand-card hover:bg-gray-50 border border-brand-border text-brand-text font-medium px-4 py-2 rounded-md transition-colors">Limpar</button>
+                    </div>
+                    <div id="user-profile" class="flex items-center gap-3 border-l border-brand-border pl-6">
+                        <div class="text-right">
+                            <p class="font-medium text-brand-text">Gustavo</p>
+                            <p class="text-xs text-brand-text-light">Mundo Óptico</p>
+                        </div>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-brand-border">
+                    </div>
+                </div>
+            </header>
+
+            <section id="goals-actions" class="flex justify-between items-center mb-6">
+                <div class="flex items-center gap-3">
+                    <button class="bg-brand-accent hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-plus text-sm"></i>
+                        Nova Meta
+                    </button>
+                    <button class="bg-brand-card hover:bg-gray-50 border border-brand-border text-brand-text font-medium px-4 py-2 rounded-md transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-file-export text-sm"></i>
+                        Exportar
+                    </button>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-brand-text-light text-sm"></i>
+                        <input type="text" placeholder="Buscar metas..." class="pl-10 pr-4 py-2 border border-brand-border rounded-md focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-brand-accent text-sm">
+                    </div>
+                </div>
+            </section>
+
+            <section id="goals-overview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                <div id="total-goals" class="bg-brand-card p-5 rounded-lg border border-brand-border flex justify-between items-center">
+                    <div>
+                        <p class="text-brand-text-light text-sm font-medium">Total de Metas</p>
+                        <p class="text-brand-text text-2xl font-bold mt-1">24</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-target text-brand-accent text-xl"></i>
+                    </div>
+                </div>
+                <div id="achieved-goals" class="bg-brand-card p-5 rounded-lg border border-brand-border flex justify-between items-center">
+                    <div>
+                        <p class="text-brand-text-light text-sm font-medium">Metas Atingidas</p>
+                        <p class="text-brand-text text-2xl font-bold mt-1">18</p>
+                        <p class="text-green-600 text-xs font-medium mt-1">75% do total</p>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                </div>
+                <div id="pending-goals" class="bg-brand-card p-5 rounded-lg border border-brand-border flex justify-between items-center">
+                    <div>
+                        <p class="text-brand-text-light text-sm font-medium">Metas Pendentes</p>
+                        <p class="text-brand-text text-2xl font-bold mt-1">4</p>
+                        <p class="text-orange-600 text-xs font-medium mt-1">17% do total</p>
+                    </div>
+                    <div class="bg-orange-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-clock text-orange-600 text-xl"></i>
+                    </div>
+                </div>
+                <div id="overdue-goals" class="bg-brand-card p-5 rounded-lg border border-brand-border flex justify-between items-center">
+                    <div>
+                        <p class="text-brand-text-light text-sm font-medium">Metas Atrasadas</p>
+                        <p class="text-brand-text text-2xl font-bold mt-1">2</p>
+                        <p class="text-red-600 text-xs font-medium mt-1">8% do total</p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded-lg">
+                        <i class="fa-solid fa-exclamation-triangle text-red-600 text-xl"></i>
+                    </div>
+                </div>
+            </section>
+
+            <section id="goals-filters" class="bg-brand-card p-5 rounded-lg border border-brand-border mb-6">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <label class="text-brand-text-light text-sm font-medium">Status:</label>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                            <option>Todos</option>
+                            <option>Atingida</option>
+                            <option>Pendente</option>
+                            <option>Atrasada</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-brand-text-light text-sm font-medium">Tipo:</label>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                            <option>Todos</option>
+                            <option>Vendas</option>
+                            <option>Leads</option>
+                            <option>ROI</option>
+                            <option>CPL</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-brand-text-light text-sm font-medium">Período:</label>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                            <option>Mensal</option>
+                            <option>Trimestral</option>
+                            <option>Anual</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label class="text-brand-text-light text-sm font-medium">Responsável:</label>
+                        <select class="bg-brand-card border border-brand-border rounded-md px-3 py-2 text-brand-text text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent">
+                            <option>Todos</option>
+                            <option>Gustavo</option>
+                            <option>Maria Silva</option>
+                            <option>João Santos</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section id="goals-table" class="bg-brand-card p-5 rounded-lg border border-brand-border">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-brand-text">Lista de Metas</h3>
+                    <div class="flex items-center gap-2 text-sm text-brand-text-light">
+                        <span>Exibindo 1-10 de 24 metas</span>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="border-b border-brand-border">
+                            <tr class="text-brand-text-light">
+                                <th class="py-3 px-4 font-medium">META</th>
+                                <th class="py-3 px-4 font-medium text-center">TIPO</th>
+                                <th class="py-3 px-4 font-medium text-center">VALOR ALVO</th>
+                                <th class="py-3 px-4 font-medium text-center">ATUAL</th>
+                                <th class="py-3 px-4 font-medium text-center">PROGRESSO</th>
+                                <th class="py-3 px-4 font-medium text-center">PRAZO</th>
+                                <th class="py-3 px-4 font-medium text-center">STATUS</th>
+                                <th class="py-3 px-4 font-medium text-center">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-brand-border hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div>
+                                        <p class="font-medium text-brand-text">Meta de Leads Outubro</p>
+                                        <p class="text-xs text-brand-text-light">Responsável: Gustavo</p>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Leads</span>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">1.200</td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">1.095</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 91%"></div>
+                                        </div>
+                                        <span class="text-xs text-brand-text-light">91%</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text-light">31/10/2025</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">Pendente</span>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="text-brand-accent hover:text-blue-600 transition-colors">
+                                            <i class="fa-solid fa-edit text-sm"></i>
+                                        </button>
+                                        <button class="text-brand-text-light hover:text-brand-text transition-colors">
+                                            <i class="fa-solid fa-eye text-sm"></i>
+                                        </button>
+                                        <button class="text-red-500 hover:text-red-600 transition-colors">
+                                            <i class="fa-solid fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-brand-border hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div>
+                                        <p class="font-medium text-brand-text">Meta CPL Mensal</p>
+                                        <p class="text-xs text-brand-text-light">Responsável: Maria Silva</p>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-medium">CPL</span>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">R$ 3,00</td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">R$ 3,25</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-red-500 h-2 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <span class="text-xs text-brand-text-light">92%</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text-light">31/10/2025</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">Atrasada</span>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="text-brand-accent hover:text-blue-600 transition-colors">
+                                            <i class="fa-solid fa-edit text-sm"></i>
+                                        </button>
+                                        <button class="text-brand-text-light hover:text-brand-text transition-colors">
+                                            <i class="fa-solid fa-eye text-sm"></i>
+                                        </button>
+                                        <button class="text-red-500 hover:text-red-600 transition-colors">
+                                            <i class="fa-solid fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-brand-border hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div>
+                                        <p class="font-medium text-brand-text">Meta ROI Trimestral</p>
+                                        <p class="text-xs text-brand-text-light">Responsável: João Santos</p>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">ROI</span>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">300%</td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">285%</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <span class="text-xs text-brand-text-light">95%</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text-light">31/12/2025</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">Pendente</span>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="text-brand-accent hover:text-blue-600 transition-colors">
+                                            <i class="fa-solid fa-edit text-sm"></i>
+                                        </button>
+                                        <button class="text-brand-text-light hover:text-brand-text transition-colors">
+                                            <i class="fa-solid fa-eye text-sm"></i>
+                                        </button>
+                                        <button class="text-red-500 hover:text-red-600 transition-colors">
+                                            <i class="fa-solid fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-brand-border hover:bg-gray-50">
+                                <td class="py-4 px-4">
+                                    <div>
+                                        <p class="font-medium text-brand-text">Meta Vendas Setembro</p>
+                                        <p class="text-xs text-brand-text-light">Responsável: Gustavo</p>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Vendas</span>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">R$ 50.000</td>
+                                <td class="py-4 px-4 text-center text-brand-text font-medium">R$ 52.300</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <span class="text-xs text-brand-text-light">105%</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center text-brand-text-light">30/09/2025</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Atingida</span>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="text-brand-accent hover:text-blue-600 transition-colors">
+                                            <i class="fa-solid fa-edit text-sm"></i>
+                                        </button>
+                                        <button class="text-brand-text-light hover:text-brand-text transition-colors">
+                                            <i class="fa-solid fa-eye text-sm"></i>
+                                        </button>
+                                        <button class="text-red-500 hover:text-red-600 transition-colors">
+                                            <i class="fa-solid fa-trash text-sm"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex justify-between items-center mt-6 pt-4 border-t border-brand-border">
+                    <div class="text-sm text-brand-text-light">
+                        Mostrando 1 a 4 de 24 resultados
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-3 py-1 border border-brand-border rounded-md text-brand-text-light hover:bg-gray-50 transition-colors">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
+                        </button>
+                        <button class="px-3 py-1 bg-brand-accent text-white rounded-md">1</button>
+                        <button class="px-3 py-1 border

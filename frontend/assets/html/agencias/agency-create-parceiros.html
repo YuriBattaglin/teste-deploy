@@ -1,0 +1,262 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button id="back-button" class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Novo Parceiro</h2>
+                            <p class="text-gray-600">Cadastro de novo parceiro no sistema</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="add-partner-content" class="flex-1 p-5 overflow-auto">
+                <div id="partner-form-container" class="max-w-4xl mx-auto">
+                    <div id="basic-info-section" class="bg-white rounded-lg border border-gray-200 mb-6">
+                        <div id="basic-info-header" class="p-5 border-b border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800">Informações Básicas</h3>
+                            <p class="text-sm text-gray-600">Dados principais do parceiro</p>
+                        </div>
+                        <div id="basic-info-form" class="p-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nome da Organização *</label>
+                                    <input type="text" placeholder="Digite o nome da organização" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">CNPJ/CPF *</label>
+                                    <input type="text" placeholder="00.000.000/0000-00" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Principal</label>
+                                    <input type="email" placeholder="contato@empresa.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+                                    <input type="tel" placeholder="(11) 99999-9999" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Área de Atuação</label>
+                                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        <option>Selecione a área</option>
+                                        <option>Desenvolvimento</option>
+                                        <option>Marketing Digital</option>
+                                        <option>Estratégia</option>
+                                        <option>Analytics</option>
+                                        <option>Suporte Técnico</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Inicial</label>
+                                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        <option>Pendente</option>
+                                        <option>Ativo</option>
+                                        <option>Inativo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pgm-config-section" class="bg-white rounded-lg border border-gray-200 mb-6">
+                        <div id="pgm-config-header" class="p-5 border-b border-gray-200">
+                            <h3 class="text-lg font-bold text-gray-800">Configuração PGM</h3>
+                            <p class="text-sm text-gray-600">Definir etapas e configurações do programa</p>
+                        </div>
+                        <div id="pgm-config-form" class="p-5">
+                            <div class="space-y-6">
+                                <div id="etapa-1" class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="font-medium text-gray-800 flex items-center">
+                                            <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+                                            ETAPA 1
+                                        </h4>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2" checked="">
+                                            <span class="text-sm text-gray-600">Ativar etapa</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Descrição da Etapa</label>
+                                            <input type="text" placeholder="Descrição da primeira etapa" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Duração (dias)</label>
+                                            <input type="number" placeholder="30" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="etapa-2" class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="font-medium text-gray-800 flex items-center">
+                                            <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-3">2</span>
+                                            ETAPA 2
+                                        </h4>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2" checked="">
+                                            <span class="text-sm text-gray-600">Ativar etapa</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Personalizado para o Parceiro</label>
+                                            <input type="text" placeholder="Nome que aparecerá para o parceiro" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Duração (dias)</label>
+                                            <input type="number" placeholder="45" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="etapa-3" class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="font-medium text-gray-800 flex items-center">
+                                            <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-3">3</span>
+                                            ETAPA 3
+                                        </h4>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2">
+                                            <span class="text-sm text-gray-600">Ativar etapa</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Nome Personalizado para o Parceiro</label>
+                                            <input type="text" placeholder="Nome que aparecerá para o parceiro" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Duração (dias)</label>
+                                            <input type="number" placeholder="60" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="etapa-4" class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h4 class="font-medium text-gray-800 flex items-center">
+                                            <span class="bg-accent text-white w-6 h-6 rounded-full flex items-center justify-center text-sm mr-3">4</span>
+                                            ETAPA 4
+                                        </h4>
+                                        <label class="flex items-center">
+                                            <input type="checkbox" class="mr-2">
+                                            <span class="text-sm text-gray-600">Ativar etapa</span>
+                                        </label>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Descrição da Etapa</label>
+                                            <input type="text" placeholder="Descrição da quarta etapa" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Duração (dias)</label>
+                                            <input type="number" placeholder="30" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="form-actions" class="flex justify-end space-x-4">
+                        <button class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button class="px-6 py-2 bg-accent text-white rounded-lg hover:bg-blue-600">
+                            Salvar Parceiro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body></html>

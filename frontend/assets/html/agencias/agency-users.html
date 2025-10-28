@@ -1,0 +1,287 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      },
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1"
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+    <div id="dashboard-container" class="flex h-screen">
+        <aside id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+            <div id="logo-section" class="p-5 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-primary">Scale ONE</h1>
+                <p class="text-sm text-gray-500">Admin Dashboard</p>
+            </div>
+            <nav id="navigation" class="flex-1 p-5">
+                <ul class="space-y-2">
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</span></li>
+                    <li><span class="flex items-center p-3 bg-accent text-white rounded-lg cursor-pointer"><i class="fa-solid fa-users mr-3"></i>Usuários</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-handshake mr-3"></i>Parceiros</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-people-group mr-3"></i>Squads</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-chart-bar mr-3"></i>Dashboard PGM</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-user-tie mr-3"></i>Dashboard Gestor</span></li>
+                    <li><span class="flex items-center p-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"><i class="fa-solid fa-traffic-light mr-3"></i>Cadastro Tráfego</span></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main id="main-content" class="flex-1 flex flex-col">
+            <header id="header" class="bg-white border-b border-gray-200 p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Usuários</h2>
+                        <p class="text-gray-600">Gerenciamento de usuários do sistema</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                            <i class="fa-solid fa-bell"></i>
+                        </button>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <div id="users-content" class="flex-1 p-5 overflow-auto">
+                <div id="users-management" class="bg-white rounded-lg border border-gray-200">
+                    <div id="users-header" class="p-5 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-gray-800">Lista de Usuários</h3>
+                            <div class="flex items-center space-x-3">
+                                <div class="relative">
+                                    <input type="text" placeholder="Buscar usuários..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                    <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                                    <option>Todos os status</option>
+                                    <option>Ativo</option>
+                                    <option>Inativo</option>
+                                    <option>Pendente</option>
+                                </select>
+                                <button class="bg-accent text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center">
+                                    <i class="fa-solid fa-plus mr-2"></i>Novo Usuário
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="users-table" class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Usuário</th>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Email</th>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Função</th>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Squad</th>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Status</th>
+                                    <th class="px-5 py-3 text-left text-sm font-medium text-gray-600">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center">
+                                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <p class="font-medium text-gray-800">João Silva</p>
+                                                <p class="text-sm text-gray-600">ID: #USR001</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">joao.silva@email.com</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Administrador</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">Marketing Digital</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Ativo</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                            <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center">
+                                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Maria Santos</p>
+                                                <p class="text-sm text-gray-600">ID: #USR002</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">maria.santos@email.com</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Gestor</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">Vendas</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Ativo</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                            <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center">
+                                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Carlos Oliveira</p>
+                                                <p class="text-sm text-gray-600">ID: #USR003</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">carlos.oliveira@email.com</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Estrategista</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">Estratégia</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Pendente</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                            <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center">
+                                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Ana Costa</p>
+                                                <p class="text-sm text-gray-600">ID: #USR004</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">ana.costa@email.com</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">Analista</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">Tráfego</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Ativo</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                            <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center">
+                                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" class="w-10 h-10 rounded-full mr-3">
+                                            <div>
+                                                <p class="font-medium text-gray-800">Pedro Ferreira</p>
+                                                <p class="text-sm text-gray-600">ID: #USR005</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">pedro.ferreira@email.com</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-sm">Usuário</span>
+                                    </td>
+                                    <td class="px-5 py-4 text-gray-800">Suporte</td>
+                                    <td class="px-5 py-4">
+                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Inativo</span>
+                                    </td>
+                                    <td class="px-5 py-4">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-accent hover:text-blue-600"><i class="fa-solid fa-edit"></i></button>
+                                            <button class="text-gray-600 hover:text-gray-800"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="pagination" class="p-5 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-gray-600">Mostrando 1 a 5 de 1,247 usuários</p>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button class="px-3 py-2 bg-accent text-white rounded-lg">1</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">2</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">3</button>
+                                <span class="px-2 text-gray-600">...</span>
+                                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">250</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body></html>

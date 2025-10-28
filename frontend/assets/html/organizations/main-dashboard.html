@@ -1,0 +1,164 @@
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script>tailwind.config = {
+  "theme": {
+    "extend": {
+      "colors": {
+        "primary": "#708090",
+        "accent": "#4169E1"
+      },
+      "fontFamily": {
+        "roboto": [
+          "Roboto",
+          "sans-serif"
+        ],
+        "sans": [
+          "Inter",
+          "sans-serif"
+        ]
+      }
+    }
+  }
+};</script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"><style>
+      body {
+        font-family: 'Inter', sans-serif !important;
+      }
+      
+      /* Preserve Font Awesome icons */
+      .fa, .fas, .far, .fal, .fab {
+        font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+      }
+    </style><style>
+  .highlighted-section {
+    outline: 2px solid #3F20FB;
+    background-color: rgba(63, 32, 251, 0.1);
+  }
+
+  .edit-button {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  </style></head>
+<body class="bg-gray-50 font-sans">
+
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div class="p-5 border-b border-gray-200">
+            <div class="text-primary font-bold text-lg">Scale ONE</div>
+            <div class="text-sm text-gray-500">Admin Dashboard</div>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto p-5">
+            <nav class="space-y-2">
+                <span class="flex items-center px-4 py-3 text-accent bg-blue-50 rounded-lg font-medium cursor-pointer">
+                    <i class="fa-solid fa-chart-line w-5 mr-3"></i>
+                    <span>Dashboard</span>
+                </span>
+                <span class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-building w-5 mr-3"></i>
+                    <span>Organizações</span>
+                </span>
+                <span class="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-users w-5 mr-3"></i>
+                    <span>Usuários</span>
+                </span>
+            </nav>
+        </div>
+        
+        <div class="p-5 border-t border-gray-200">
+            <div class="flex items-center">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Admin" class="w-8 h-8 rounded-full">
+                <div class="ml-3">
+                    <div class="text-sm font-medium text-gray-700">Admin User</div>
+                    <div class="text-xs text-gray-500">Administrador</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <div id="header" class="bg-white border-b border-gray-200 px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+                    <p class="text-gray-600 mt-1">Visão geral do sistema Scale ONE</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-400 hover:text-gray-600">
+                        <i class="fa-solid fa-bell text-lg"></i>
+                    </button>
+                    <button class="p-2 text-gray-400 hover:text-gray-600">
+                        <i class="fa-solid fa-cog text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="flex-1 p-6 overflow-y-auto">
+            <!-- Stats Cards -->
+            <div id="stats-section" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- Total Organizations Card -->
+    <div id="organizations-card" class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total de Organizações Ativas</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">234</p>
+            </div>
+            <div class="w-12 h-12 bg-accent bg-opacity-10 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-building text-accent text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Partners Card -->
+    <div id="partners-card" class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total de Parceiros Ativos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">82</p>
+            </div>
+            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-handshake text-primary text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Users Card -->
+    <div id="users-card" class="bg-white rounded-lg border border-gray-200 p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm font-medium">Total de Usuários Ativos</p>
+                <p class="text-3xl font-bold text-gray-800 mt-2">1,456</p>
+            </div>
+            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-users text-green-600 text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+
+</body></html>

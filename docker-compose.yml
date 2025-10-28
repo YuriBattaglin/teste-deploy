@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3307:3306"  # (opcional) evita conflito com MySQL local
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot", "--silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - db_data:/var/lib/mysql
+      
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+
+volumes:
+  db_data:
