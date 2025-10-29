@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => [
         'http://localhost:3000', 
-        'https://teste-deploy-seven-nu.vercel.app',
+        'https://teste-scale-one.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
